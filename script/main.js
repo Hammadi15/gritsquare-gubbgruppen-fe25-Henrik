@@ -1,0 +1,1 @@
+const baseURL = "https://flaskpost-8eeb9-default-rtdb.europe-west1.firebasedatabase.app";
