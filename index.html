@@ -1,12 +1,32 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gubben</title>
+  <meta charset="UTF-8">
+  <title>Gubb Chat </title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+
 </head>
 <body>
-    
+  <nav class="navbar">
+    <ul class="nav-list">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+     <h1>💬 Gubb Chat</h1>
+
+    <div class="input-group">
+      <input type="text" id="usernameInput" placeholder="Your name">
+      <input type="text" id="messageInput" placeholder="Write a message...">
+      <button id="postBtn">Post</button>
+    </div>
+
+    <div id="messagesList" class="messages"></div>
+  </div>
+
 </body>
 </html>
