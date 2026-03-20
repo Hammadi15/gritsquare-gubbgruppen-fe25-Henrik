@@ -115,32 +115,44 @@ const usernameInput = document.getElementById("usernameInput");
 const messageInput = document.getElementById("messageInput");
 
 postBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  // Censurera namn och meddelande innan vi skickar
+  e.preventDefault(); // förhindrar formulärets default-submit
+
+  // Censurera namn och meddelande
   const censoredName = censorBadWords(usernameInput.value.trim());
   const censoredMessage = censorBadWords(messageInput.value.trim());
 
-  const userObj = {
-    owner: auth.currentUser ? auth.currentUser.uid : "anonymous",
-    name: censoredName,      // censurerat namn
-    message: censoredMessage // censurerat meddelande
-  }; 
-
-  if (!userObj.name || !userObj.message) {
+  if (!censoredName || !censoredMessage) {
     alert("Please enter both username and message!");
     return;
-  } 
+  }
 
-  const response = await postUser(userObj);
+  // Skapa user-objekt
+  const userObj = {
+    owner: auth.currentUser ? auth.currentUser.uid : "anonymous",
+    name: censoredName,
+    message: censoredMessage
+  };
 
-  if (response) {
+  try {
+    // Skicka till Firebase
+    const response = await postUser(userObj);
+
+    if (!response) throw new Error("Failed to post message");
+
+    // Hämta och visa alla users igen
     const users = await getAllUsers();
     displayAllUsers(users);
+
+    //  Spela upp pop-ljud
+    const audio = new Audio("../audio/pop.mp3"); // justera sökväg om behövs
+    audio.play().catch(err => console.warn("Audio playback failed:", err));
 
     // Töm inputfält
     usernameInput.value = "";
     messageInput.value = "";
-  } else {
+
+  } catch (err) {
+    console.error(err);
     alert("Failed to post message, please try again");
   }
 });
