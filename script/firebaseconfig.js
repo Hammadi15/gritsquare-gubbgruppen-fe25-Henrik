@@ -115,7 +115,7 @@ const messageInput = document.getElementById("messageInput");
 
 
     // Spela upp pop-ljud
-    const audio = new Audio("pop.mp3");
+    const audio = new Audio("./pop.mp3");
     audio.play().catch(err => console.warn("Audio playback failed:", err));
 
 
