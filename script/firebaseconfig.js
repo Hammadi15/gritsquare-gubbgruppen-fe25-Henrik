@@ -109,6 +109,9 @@ export function displayAllUsers(users) {
 }
 
 
+// Håller koll på inloggad användare
+let currentUser = null;
+
 // Event listener för knappen 
 const postBtn = document.getElementById("postBtn");
 const usernameInput = document.getElementById("usernameInput");
@@ -119,7 +122,8 @@ postBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   // Censurera namn och meddelande
-  const censoredName = censorBadWords(usernameInput.value.trim());
+  const rawName = currentUser ? currentUser.displayName : usernameInput.value.trim();
+  const censoredName = censorBadWords(rawName);
   const censoredMessage = censorBadWords(messageInput.value.trim());
 
   const userObj = {
@@ -171,6 +175,7 @@ const signedInItem = document.getElementById("signedInItem");
 const signedInLabel = document.getElementById("signedInLabel");
 
 onAuthStateChanged(auth, (user) => {
+  currentUser = user || null;
   if (user) {
     console.log("User is signed in:", user.displayName);
     if (loginItem) loginItem.style.display = "none";
