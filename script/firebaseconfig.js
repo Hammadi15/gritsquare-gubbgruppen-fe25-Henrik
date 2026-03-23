@@ -94,7 +94,7 @@ export function displayAllUsers(users) {
       <span>${user.name}: ${user.message || "Inget meddelande"}</span>
     `;
 
-    // 🔥 DRAG START
+    //  DRAG START
     div.addEventListener("dragstart", (e) => {
       e.dataTransfer.setData("text/plain", key);
       div.classList.add("dragging");
@@ -138,6 +138,10 @@ postBtn.addEventListener("click", async () => {
   if (response) {
     const users = await getAllUsers();
     displayAllUsers(users);
+
+    // Spela upp pop-ljud
+    const audio = new Audio("pop.mp3");
+    audio.play().catch(err => console.warn("Audio playback failed:", err));
 
     // Töm inputfält
     if (!currentUser) usernameInput.value = "";
