@@ -113,12 +113,6 @@ const postBtn = document.getElementById("postBtn");
 const usernameInput = document.getElementById("usernameInput");
 const messageInput = document.getElementById("messageInput");
 
-
-    // Spela upp pop-ljud
-    const audio = new Audio("./pop.mp3");
-    audio.play().catch(err => console.warn("Audio playback failed:", err));
-
-
 postBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
