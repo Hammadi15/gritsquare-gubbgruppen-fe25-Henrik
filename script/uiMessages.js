@@ -41,10 +41,12 @@ export function displayAllUsers(users, sortFunction = sortUsersByCreatedAt) {
 
     const timeText = user.createdAt ? new Date(user.createdAt).toLocaleString("sv-SE") : "";
 
-    div.innerHTML = `
-      <span>${user.name || "Anonymous"}: ${user.message || ""}</span>
-      <small>${timeText}</small>
-    `;
+div.innerHTML = `
+  <div class="message-content">
+    <div><strong>${user.name}</strong>: ${user.message || "Inget meddelande"}</div>
+    <small class="message-time">${timeText}</small>
+  </div>
+`;
 
     div.addEventListener("dragstart", (e) => {
       e.dataTransfer.setData("text/plain", key);

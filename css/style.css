@@ -61,7 +61,12 @@ body {
 
 
 }
-
+.message-time {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.45);
+}
 /* Hover */
 .message:hover {
   transform: translateY(-3px);
