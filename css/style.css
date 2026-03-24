@@ -48,6 +48,24 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  position: relative;
+  overflow: visible;
+}
+
+.message-time-div{
+    background-color: #f6f7fb;
+    padding: 10px;
+    display: flex;
+    position: absolute;
+    bottom: -32px;
+    left: 10px;
+    opacity: 0;
+}
+
+.message:hover .message-time-div{
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    transition-delay: 0.5s;
 }
 
 
@@ -63,7 +81,6 @@ body {
 }
 .message-time {
   display: block;
-  margin-top: 4px;
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.45);
 }

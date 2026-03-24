@@ -31,7 +31,7 @@ export function displayAllUsers(users, sortFunction = sortUsersByCreatedAt) {
       "text-dark",
       "border-secondary",
       "rounded-3",
-      "mb-2"
+      "mb-2",
     );
     if (user.owner && user.owner !== "anonymous") {
       div.classList.add("message-authenticated");
@@ -42,9 +42,11 @@ export function displayAllUsers(users, sortFunction = sortUsersByCreatedAt) {
     const timeText = user.createdAt ? new Date(user.createdAt).toLocaleString("sv-SE") : "";
 
 div.innerHTML = `
-  <div class="message-content">
+  <div class="message-content ">
     <div><strong>${user.name}</strong>: ${user.message || "Inget meddelande"}</div>
+    <div class="message-time-div rounded">
     <small class="message-time">${timeText}</small>
+    </div>
   </div>
 `;
 
