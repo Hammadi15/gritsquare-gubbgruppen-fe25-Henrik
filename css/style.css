@@ -122,8 +122,8 @@ body {
   padding: 18px;
   text-align: center;
   border-radius: 16px;
-  border: 2px dashed rgba(255, 0, 0, 0.4);
-  color: rgba(255, 0, 0, 0.7);
+  border: 2px dashed #d75a3e;
+  color: #d75a3e;
   font-weight: bold;
   transition: all 0.25s ease;
 }
