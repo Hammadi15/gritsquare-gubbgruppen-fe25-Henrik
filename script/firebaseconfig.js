@@ -1,40 +1,53 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getDatabase, ref, set, push, get } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  GoogleAuthProvider,
+} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  push,
+  get,
+} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 import { censorBadWords } from "./censor.js";
 import { setupDragAndDelete } from "./dragdelete.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyASUiN6n-p9_B9Ruox6l3ZmW6qbQx3kRgY",
-    authDomain: "flaskpost-8adcc.firebaseapp.com",
-    projectId: "flaskpost-8adcc",
-    storageBucket: "flaskpost-8adcc.firebasestorage.app",
-    messagingSenderId: "75468522109",
-    appId: "1:75468522109:web:6a69184654f1cea857e714"
-  };
-  
+  apiKey: "AIzaSyASUiN6n-p9_B9Ruox6l3ZmW6qbQx3kRgY",
+  authDomain: "flaskpost-8adcc.firebaseapp.com",
+  projectId: "flaskpost-8adcc",
+  storageBucket: "flaskpost-8adcc.firebasestorage.app",
+  messagingSenderId: "75468522109",
+  appId: "1:75468522109:web:6a69184654f1cea857e714",
+};
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const baseUrl = "https://flaskpost-8eeb9-default-rtdb.europe-west1.firebasedatabase.app/users";
+const baseUrl =
+  "https://flaskpost-8eeb9-default-rtdb.europe-west1.firebasedatabase.app/users";
 
-//  Hämta alla users 
+//  Hämta alla users
 export async function getAllUsers() {
-
   const url = baseUrl + ".json";
-  
+
   try {
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to fetch users: ${res.status} ${res.statusText}`);
+    if (!res.ok)
+      throw new Error(`Failed to fetch users: ${res.status} ${res.statusText}`);
     const userObj = await res.json();
     return userObj;
   } catch (error) {
     console.error("Error fetching users:", error);
     return null;
   }
-}  
+}
 
-//  Posta en ny user 
+//  Posta en ny user
 export async function postUser(user) {
   const url = baseUrl + ".json";
   try {
@@ -42,8 +55,8 @@ export async function postUser(user) {
       method: "POST",
       body: JSON.stringify(user),
       headers: {
-        "Content-Type": "application/json"  
-      }
+        "Content-Type": "application/json",
+      },
     });
     if (!res.ok) throw new Error(`Failed to post user: ${res.status}`);
     const data = await res.json();
@@ -59,7 +72,7 @@ export async function deleteUser(userKey) {
   const url = `${baseUrl}/${userKey}.json`;
   try {
     const res = await fetch(url, {
-      method: "DELETE"
+      method: "DELETE",
     });
     if (!res.ok) throw new Error(`Failed to delete user: ${res.status}`);
     return true;
@@ -68,7 +81,6 @@ export async function deleteUser(userKey) {
     return false;
   }
 }
-
 
 export function displayAllUsers(users) {
   const messagesList = document.getElementById("messagesList");
@@ -85,13 +97,21 @@ export function displayAllUsers(users) {
       "text-dark",
       "border-secondary",
       "rounded-3",
-      "mb-2"
+      "mb-2",
     );
     div.setAttribute("draggable", true);
     div.dataset.key = key;
 
+    let timeText = "";
+
+    if (user.createdAt) {
+      const date = new Date(user.createdAt);
+      timeText = date.toLocaleDateString("sv-SE");
+    }
+
     div.innerHTML = `
       <span>${user.name}: ${user.message || "Inget meddelande"}</span>
+      <small>${timeText}</small>
     `;
 
     //  DRAG START
@@ -108,7 +128,6 @@ export function displayAllUsers(users) {
   });
 }
 
-
 const postBtn = document.getElementById("postBtn");
 const usernameInput = document.getElementById("usernameInput");
 const messageInput = document.getElementById("messageInput");
@@ -123,13 +142,14 @@ postBtn.addEventListener("click", async (e) => {
   const userObj = {
     owner: auth.currentUser ? auth.currentUser.uid : "anonymous",
     name: censoredName,
-    message: censoredMessage
-  }; 
+    message: censoredMessage,
+    createdAt: Date.now(),
+  };
 
   if (!userObj.name || !userObj.message) {
     alert("Please enter both username and message!");
     return;
-  } 
+  }
 
   const response = await postUser(userObj);
 
@@ -139,7 +159,7 @@ postBtn.addEventListener("click", async (e) => {
 
     // Spela upp pop-ljud
     const audio = new Audio("./pop.mp3");
-    audio.play().catch(err => console.warn("Audio playback failed:", err));
+    audio.play().catch((err) => console.warn("Audio playback failed:", err));
 
     // Töm inputfält
     usernameInput.value = "";
@@ -149,18 +169,14 @@ postBtn.addEventListener("click", async (e) => {
   }
 });
 
-//  Kör initial hämta alla users 
+//  Kör initial hämta alla users
 (async function init() {
   const users = await getAllUsers();
   displayAllUsers(users);
-    setupDragAndDelete(deleteUser, getAllUsers, displayAllUsers);
-
+  setupDragAndDelete(deleteUser, getAllUsers, displayAllUsers);
 })();
 
-
-
 // Logga in med google genom firebase / Henrik
-
 
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -194,15 +210,14 @@ loginBtn.addEventListener("click", () => {
     .catch((error) => {
       console.error("Error signing in:", error);
       if (error.code === "auth/unauthorized-domain") {
-        alert("Sign-in failed: this domain is not authorized in Firebase.\nOpen the app via a local server (e.g. Live Server) instead of opening the file directly.");
+        alert(
+          "Sign-in failed: this domain is not authorized in Firebase.\nOpen the app via a local server (e.g. Live Server) instead of opening the file directly.",
+        );
       } else {
         alert(`Sign-in failed: ${error.message}`);
       }
     });
 });
-
-
-
 
 // i github.com på din fork, synca med OG repo
 // i github desktop sync så att din lokala pc pullar atta commisten
