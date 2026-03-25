@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return localStorage.getItem(TERMS_ACCEPTED_KEY) === 'true';
   }
 
-  // Show the modal
+  
   function showTermsModal() {
     if (termsModal) {
       termsModal.classList.remove('hidden');
