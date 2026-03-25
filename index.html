@@ -14,6 +14,7 @@
   <script src="script/termsConditions.js" defer></script>
   <script src="script/trail.js" defer></script>
   <script src="script/translate.js" defer></script>
+    <script src="script/search.js" type="module" defer></script>
   <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,6 +90,12 @@
 
         <div class="collapse w-100 d-md-flex justify-content-end" id="navMenu">
           <ul class="nav nav-pills align-items-md-center flex-column flex-md-row align-items-start mt-2 mt-md-0">
+            <li> 
+              <form id="searchForm">
+                 <input type="text" name="search" id="searchBar" placeholder="Search"/>
+                 <button type="submit">Search</button>
+              </form>
+            </li>
             <li class="nav-item"><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
             <li class="nav-item"><a href="contact.html" class="nav-link">Contact us</a></li>
             <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
