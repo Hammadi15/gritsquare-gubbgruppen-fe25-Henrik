@@ -81,8 +81,16 @@ div.innerHTML = `
     <div class="message-time-div rounded">
       <small class="message-time">${timeText}</small>
     </div>
+    <button class="like-btn">❤️ 0</button>
   </div>
 `;
+const likeBtn = div.querySelector(".like-btn");
+let likes = 0;
+
+likeBtn.addEventListener("click", () => {
+  likes++;
+  likeBtn.textContent = `❤️ ${likes}`;
+});
 
     const favoriteBtn = div.querySelector(".favorite-btn");
     favoriteBtn.addEventListener("click", async (e) => {

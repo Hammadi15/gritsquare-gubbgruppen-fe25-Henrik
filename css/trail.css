@@ -1,0 +1,41 @@
+:root {
+  --background-color: #111;
+  --text-color: #fff;
+  --sparkle-color: #003554; 
+}
+
+:root[data-theme="light"] {
+  --background-color: #fff;
+  --text-color: #111;
+  --sparkle-color: #ff7f00; 
+}
+
+body {
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  
+}
+
+.sparkle {
+  position: fixed; 
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none; 
+  background: radial-gradient(circle, #fff 0%, var(--sparkle-color) 70%, transparent 100%);
+  animation: fade 1s forwards;
+  z-index: 9999; 
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
