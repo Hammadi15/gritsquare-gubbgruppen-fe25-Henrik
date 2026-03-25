@@ -559,6 +559,10 @@ footer .text-muted {
     "ELXP" 0;
 }
 
+.emoji-post-group {
+  gap: 0.7rem;
+}
+
 #fireworkContainer {
   position: fixed;
   top: 0;
@@ -566,7 +570,7 @@ footer .text-muted {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  overflow: hidden;
+  overflow: hiddsen;
   z-index: 9999;
 }
 

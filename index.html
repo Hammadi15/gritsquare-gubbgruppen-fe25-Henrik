@@ -121,17 +121,14 @@
         <label for="usernameInput" class="form-label visually-hidden">Your name</label>
         <input type="text" id="usernameInput" class="form-control" placeholder="Your name" autocomplete="name" required>
       </div>
-      <div class="col-12 col-md-5">
+      <div class="col-12 col-md-4">
         <label for="messageInput" class="form-label visually-hidden">Write a message</label>
         <input type="text" id="messageInput" class="form-control" placeholder="Write a message..." required>
       </div>
        <!--Emoji feature-->
-       <div class="col-12 col-md-2">
-      <select id="emojis"></select>
-    </div>
-
-      <div class="col-12 col-md-2 d-grid">
-        <button id="postBtn" type="submit" class="btn btn-burnt-peach">Post</button>
+       <div class="col-12 col-md-4 d-flex emoji-post-group">
+        <select id="emojis"></select>
+        <button id="postBtn" type="submit" class="btn btn-burnt-peach flex-grow-1">Post</button>
       </div>
       
     </form>
