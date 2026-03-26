@@ -107,6 +107,11 @@ body {
     transition-delay: 0.5s;
 }
 
+.reply{
+    width: 95%;
+    margin-left: auto;
+}
+
 
 
 @media (max-width: 576px) {
