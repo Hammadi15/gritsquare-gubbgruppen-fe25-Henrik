@@ -70,6 +70,23 @@ export async function deleteUser(userKey) {
   }
 }
 
+export async function updateUser(userKey, updates) {
+  if (!userKey || !updates) return false;
+  const url = `${baseUrlUsers}/${userKey}.json`;
+  try {
+    const res = await fetch(url, {
+      method: "PATCH",
+      body: JSON.stringify(updates),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) throw new Error(`Failed to update user: ${res.status}`);
+    return true;
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return false;
+  }
+}
+
 export async function getFavoritesByUserId(userId) {
   if (!userId) return {};
 
