@@ -189,7 +189,6 @@ export function displayAllUsers(
         div.addEventListener("dragend", () => div.classList.remove("dragging"));
 
         messagesList.append(div, replyDiv);
-
             console.log(replies)
             renderReplies(replies, key, replyDiv);
     });
