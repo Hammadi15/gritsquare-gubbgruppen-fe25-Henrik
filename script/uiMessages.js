@@ -137,7 +137,7 @@ export function displayAllUsers(
         div.innerHTML = `
             <div class="message-content">
                 <div class="message-head">
-                <div><strong>${user.name}</strong>: ${user.message || "Inget meddelande"}</div>
+            <div><strong>${user.name}</strong>: <span style="color: ${user.color || "#000"}">${user.message || "Inget meddelande"}</span></div>
                 <button class="favorite-btn ${isFavorite ? "is-favorite" : ""}" type="button" aria-label="Favoritmarkera meddelande">
                     ${isFavorite ? "★" : "☆"}
                 </button>
