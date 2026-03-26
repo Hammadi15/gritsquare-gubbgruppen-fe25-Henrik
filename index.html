@@ -125,9 +125,11 @@
         <label for="messageInput" class="form-label visually-hidden">Write a message</label>
         <input type="text" id="messageInput" class="form-control" placeholder="Write a message..." required>
       </div>
-       <!--Emoji feature-->
+       <!--Emoji/color picker feature tillagd-->
        <div class="col-12 col-md-4 d-flex emoji-post-group">
         <select id="emojis"></select>
+         <label for="textColorPicker" class="form-label mb-0 text-black">Textfärg:</label>
+        <input type="color" id="textColorPicker" value="#000000" title="Choose text color">
         <button id="postBtn" type="submit" class="btn btn-burnt-peach flex-grow-1">Post</button>
       </div>
       
