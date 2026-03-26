@@ -1,7 +1,6 @@
 import { getAllUsers, deleteUser, getAllReplies } from "./userApi.js";
 import { displayAllUsers, sortUsersByCreatedAt, sortUsersByName, sortUsersByFavorites } from "./uiMessages.js";
 import { setupDragAndDelete } from "./dragdelete.js";
-import { setupDragAndFavorite } from "./dragfavorite.js";
 import { setupPostForm } from "./postForm.js";
 import { setupAuth } from "./auth.js";
 import {
@@ -17,7 +16,6 @@ import {
 const sortTimeBtn = document.getElementById("sortTimeBtn");
 const sortNameBtn = document.getElementById("sortNameBtn");
 const sortFavoritesBtn = document.getElementById("sortFavoritesBtn");
-const favoriteZone = document.getElementById("favoriteZone");
 
 let currentUsers = null;
 let currentFavorites = new Set();
@@ -32,15 +30,6 @@ function getSortFunction() {
   }
   return sortUsersByCreatedAt;
 }
-
-function syncFavoriteZoneLabel() {
-  if (!favoriteZone) return;
-  favoriteZone.textContent =
-    currentSortMode === "favorites"
-      ? "⭐ Dra hit för att avfavoritera"
-      : "⭐ Dra hit för favorit";
-}
-
 function renderUsers(nextUsers = currentUsers) {
   currentUsers = nextUsers;
   displayAllUsers(currentUsers, getSortFunction(), {
@@ -118,20 +107,17 @@ async function refreshAppState() {
 
 sortTimeBtn.addEventListener("click", async () => {
   currentSortMode = "time";
-  syncFavoriteZoneLabel();
   renderUsers();
 });
 
 sortNameBtn.addEventListener("click", async () => {
   currentSortMode = "name";
-  syncFavoriteZoneLabel();
   renderUsers();
 });
 
 if (sortFavoritesBtn) {
   sortFavoritesBtn.addEventListener("click", () => {
     currentSortMode = "favorites";
-    syncFavoriteZoneLabel();
     renderUsers();
   });
 }
@@ -142,25 +128,7 @@ async function init() {
 
   setupDragAndDelete(deleteUser, getAllUsers, renderUsers);
 
-  setupDragAndFavorite(
-    async (messageKey) => {
-      const shouldUnfavorite = currentSortMode === "favorites";
-      const success = shouldUnfavorite
-        ? await removeFavoriteForCurrentUser(messageKey, window.currentUserId)
-        : await addFavoriteForCurrentUser(messageKey, window.currentUserId);
-      if (!success) return false;
-
-      currentFavorites = await getFavoritesForCurrentUser(window.currentUserId);
-      return true;
-    },
-    async () => {
-      renderUsers();
-    },
-  );
-
   setupPostForm({ displayAllUsers: renderUsers });
-
-  syncFavoriteZoneLabel();
 
   setupAuth({
     onAuthUserChange: async ({ user, previousUser, isInitial }) => {
@@ -188,5 +156,6 @@ async function init() {
 init().catch((error) => {
   console.error("Init error:", error);
 });
+
 
 

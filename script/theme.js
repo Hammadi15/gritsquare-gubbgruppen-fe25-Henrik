@@ -14,7 +14,10 @@ function applyTheme(theme) {
 function updateToggleLabel() {
   if (!toggleBtn) return;
   const isLight = root.getAttribute("data-theme") === "light";
-  toggleBtn.textContent = isLight ? "Dark mode" : "Light mode";
+  const iconClass = isLight ? "bi-moon-stars" : "bi-brightness-high-fill";
+  const label = isLight ? "Dark mode" : "Light mode";
+  toggleBtn.innerHTML = `<i class="bi ${iconClass}" aria-hidden="true"></i><span class="visually-hidden">${label}</span>`;
+  toggleBtn.setAttribute("aria-label", label);
 }
 
 const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
