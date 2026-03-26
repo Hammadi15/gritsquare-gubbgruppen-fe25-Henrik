@@ -103,39 +103,22 @@ export function displayAllUsers(
             : "";
 
         div.addEventListener("click", (e) => {
-            console.log("I am clicked");
-
-            const form = e.currentTarget.querySelector("form");
-
-            if (form) {
-                form.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                });
-
-                form.addEventListener("submit", (e) => {
-                    e.preventDefault();
-                    const data = new FormData(form);
-
-                    const reply = data.get("reply-message");
-                    const replyColor = document.getElementById("textColorPicker")?.value || "#000000";
-
-                    if (!reply) {
-                        alert("dont send empty reply");
-                        return;
-                    }
-
-                    const replyUsername = document.getElementById("usernameInput")?.value?.trim() || "Anonymous";
-                    sendReply(key, reply, replyColor, replyUsername);
-                    console.log(reply);
-                });
-            }
-
-            const replySection =
-                e.currentTarget.querySelector(".reply-section");
-
+            if (e.target.closest("form")) return;
+            const replySection = e.currentTarget.querySelector(".reply-section");
             replySection.hidden = !replySection.hidden;
+        });
 
-            console.log(replySection);
+        div.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const data = new FormData(e.target);
+            const reply = data.get("reply-message");
+            const replyColor = document.getElementById("textColorPicker")?.value || "#000000";
+            if (!reply) {
+                alert("dont send empty reply");
+                return;
+            }
+            const replyUsername = document.getElementById("usernameInput")?.value?.trim() || "Anonymous";
+            sendReply(key, reply, replyColor, replyUsername);
         });
 
         div.innerHTML = `
