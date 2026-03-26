@@ -1,4 +1,4 @@
-import { getAllUsers, deleteUser } from "./userApi.js";
+import { getAllUsers, deleteUser, getAllReplies } from "./userApi.js";
 import { displayAllUsers, sortUsersByCreatedAt, sortUsersByName, sortUsersByFavorites } from "./uiMessages.js";
 import { setupDragAndDelete } from "./dragdelete.js";
 import { setupDragAndFavorite } from "./dragfavorite.js";
@@ -55,6 +55,26 @@ function renderUsers(nextUsers = currentUsers) {
     },
   });
 }
+    const replies = await getAllReplies()
+
+export const renderReplies = async(parent_id, messagesList) => {
+
+    for (const key in replies) {
+        if (!Object.hasOwn(replies, key)) return;
+        
+        const element = replies[key];
+        console.log(element)
+        // console.log(element.parent_id)
+        if(element.parent_id === parent_id){
+            console.log(`${element.message} is a reply to ${parent_id}`)
+            const replyDiv = document.createElement("div");
+            replyDiv.innerHTML = `<p>${element.message}</p>`
+
+            messagesList.appendChild(replyDiv)
+        }
+    }
+}
+
 
 async function refreshUsersAndRender() {
   currentUsers = await getAllUsers();

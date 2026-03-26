@@ -46,6 +46,19 @@ export async function postReply(reply) {
   }
 }
 
+export async function getAllReplies() {
+  const url = "https://flaskpost-8adcc-default-rtdb.europe-west1.firebasedatabase.app/replies.json";
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to fetch users: ${res.status} ${res.statusText}`);
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return null;
+  }
+}
+
+
 export async function deleteUser(userKey) {
   const url = `${baseUrlUsers}/${userKey}.json`;
   try {

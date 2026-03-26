@@ -1,4 +1,6 @@
+import { renderReplies } from "./main.js";
 import { sendReply } from "./sendReply.js";
+import { getAllReplies } from "./userApi.js";
 
 export function sortUsersByCreatedAt(users) {
     if (!users) return [];
@@ -182,6 +184,15 @@ export function displayAllUsers(
         });
         div.addEventListener("dragend", () => div.classList.remove("dragging"));
 
+
+
         messagesList.appendChild(div);
+
+        const render = async() => {
+            await renderReplies(key, messagesList);
+
+        }
+        render();
+
     });
 }
